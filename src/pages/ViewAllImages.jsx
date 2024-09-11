@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
+import { BASE_URL } from "../constants.js";
 
 const ViewAllImages = () => {
   const [images, setImages] = useState([]);
@@ -13,10 +14,9 @@ const ViewAllImages = () => {
         const headers = {
           Authorization: token,
         };
-        const response = await axios.get(
-          "http://localhost:8000/api/admin/images",
-          { headers }
-        );
+        const response = await axios.get(`${BASE_URL}/admin/images`, {
+          headers,
+        });
         setImages(response.data.data);
       } catch (error) {
         setError(error.response?.data?.message || error.message);
@@ -32,7 +32,7 @@ const ViewAllImages = () => {
       const headers = {
         Authorization: token,
       };
-      await axios.delete(`http://localhost:8000/api/admin/images/${id}`, {
+      await axios.delete(`${BASE_URL}/admin/images/${id}`, {
         headers,
       });
       setImages(images.filter((image) => image._id !== id));
