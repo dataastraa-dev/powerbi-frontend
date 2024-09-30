@@ -7,9 +7,12 @@ import ViewUsers from "./pages/ViewUsers";
 import ViewImages from "./pages/ViewAllImages";
 import ProtectedRoute from "./components/ProtectedRoute";
 import {jwtDecode} from "jwt-decode";
+import UserCreationCard from "./components/UserCreationCard";
 
 const App = () => {
   const [user, setUser] = useState(null);
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,6 +28,7 @@ const App = () => {
   }, []);
 
   return (
+    <>
     <Router>
       <Routes>
         <Route
@@ -43,7 +47,11 @@ const App = () => {
           path="/admin/*"
           element={
             <ProtectedRoute user={user} role="Admin">
-              <AdminRoutes user={user}/>
+              <AdminRoutes 
+                user={user}
+                
+                />
+                
             </ProtectedRoute>
           }
         />
@@ -58,15 +66,48 @@ const App = () => {
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
+    </>
   );
 };
 
-const AdminRoutes = ({user}) => {
+const AdminRoutes = ({user, setIsOpen}) => {
+
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <Routes>
-      <Route path="dashboard" element={<AdminDashboard user={user}/>} />
-      <Route path="view-users" element={<ViewUsers />} />
-      <Route path="view-images" element={<ViewImages />} />
+      <Route 
+        path="dashboard" 
+        element={
+        <AdminDashboard 
+        user={user}
+        toggleSidebar={toggleSidebar}
+        
+        />
+        } />
+      <Route 
+        path="view-users" 
+        element={
+        <ViewUsers 
+        toggleSidebar={toggleSidebar}
+        />} />
+
+      <Route 
+        path="view-images" 
+        element={
+        <ViewImages 
+        toggleSidebar={toggleSidebar}
+        />} />
+
+      <Route 
+        path="create-user" 
+        element={
+        <UserCreationCard 
+        toggleSidebar={toggleSidebar}
+        />} />
+      
     </Routes>
   );
 };

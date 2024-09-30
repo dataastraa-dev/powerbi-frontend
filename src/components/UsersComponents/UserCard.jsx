@@ -53,15 +53,15 @@ const UserCard = ({ user, onDelete }) => {
         <td className="py-4 px-6">
         {userData.images
           .map((image) => (
-            <a
+            <span 
               href={`${image.imageURL}`}
               key={image._id}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-600"
+              // className="hover:text-blue-600" 
             >
               {image.name}
-            </a>
+            </span>
           ))
           .reduce((acc, curr, index) => {
             if (index === 0) {

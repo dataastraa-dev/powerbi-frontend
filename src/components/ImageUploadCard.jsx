@@ -33,7 +33,7 @@ const ImageUploadCard = () => {
   };
 
   return (
-    <div className="max-w-md w-full mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
+    <div className="max-w-md w-full mx-auto mt-5 p-6 bg-white shadow-md rounded-md ">
       <h1 className="text-2xl font-semibold mb-6 text-center text-gray-800">Add Image</h1>
       {error && <p className="text-red-500 text-center">{error}</p>}
       {success && <p className="text-green-500 text-center">{success}</p>}

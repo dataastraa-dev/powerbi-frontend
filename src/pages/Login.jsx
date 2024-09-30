@@ -83,14 +83,14 @@ const Login = ({ setUser }) => {
       </div>
       <div className="hidden md:block w-full md:w-1/2 bg-gray-600 text-white p-8">
         <div className="flex flex-col items-center justify-center h-full">
-          <h2 className="text-3xl font-bold mb-4">Your Organization Name</h2>
-          <p className="mb-6">
+          <h2 className="text-3xl font-bold mb-4">DataAstraa LLP</h2>
+          {/* <p className="mb-6">
             Add your organization's description here.
-          </p>
-          <div className="flex items-center">
+          </p> */}
+          {/* <div className="flex items-center">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-blue-600 p-3">17k</div>
             <span className="ml-4">Add your organization's impact statement here.</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

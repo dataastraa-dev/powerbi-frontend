@@ -2,10 +2,10 @@ import React from "react";
 import UserCard from "./UserCard";
 
 const UserList = ({ users, onDelete }) => (
-  <div className="overflow-x-auto">
-    <table className="min-w-full bg-white">
+  <div className="overflow-x-auto ">
+    <table className="w-full bg-white ">
       <thead>
-        <tr className="w-full bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+        <tr className="w-full bg-gray-200 text-gray-700 uppercase text-sm leading-normal ">
           <th className="py-3 px-6 text-left">Name</th>
           <th className="py-3 px-6 text-left">Email</th>
           <th className="py-3 px-6 text-left">Images</th>
