@@ -15,7 +15,7 @@ const ViewAllImages = () => {
           Authorization: token,
         };
         const response = await axios.get(
-          "http://localhost:8000/api/admin/images",
+          `${BASE_URL}/admin/images`,
           { headers }
         );
         setImages(response.data.data);
@@ -33,7 +33,7 @@ const ViewAllImages = () => {
       const headers = {
         Authorization: token,
       };
-      await axios.delete(`http://localhost:8000/api/admin/images/${id}`, {
+      await axios.delete(`${BASE_URL}/admin/images/${id}`, {
         headers,
       });
       setImages(images.filter((image) => image._id !== id));
