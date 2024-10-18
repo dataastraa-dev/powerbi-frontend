@@ -69,7 +69,7 @@ const Sidebar = ({ activeTab, setActiveTab,sidebarToggle, setSidebarToggle}) => 
               : "bg-gray-900 hover:bg-gray-700"
           } focus:outline-none`}
         >
-          View Images
+          Dashboard List
         </button>
       </nav>
       

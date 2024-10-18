@@ -81,7 +81,7 @@ const EditUserModal = ({ user, images, onClose, onUpdate }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Select Images</label>
+            <label className="block text-gray-700 mb-2">Select Dashboard</label>
             <Select
               isMulti
               name="images"

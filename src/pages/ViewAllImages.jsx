@@ -98,7 +98,7 @@ const ViewAllImages = () => {
           <div>
             <button className="bg-blue-500 text-white py-2.5 mb-2 mt-2 rounded-md hover:bg-blue-600 w-full xs:w-28 sm:w-32 "
                   onClick={()=> setFilterPopupVisible(true)}
-                  >Add Images
+                  >Add New Dashboard
             </button>
           </div>
         </div>
@@ -154,7 +154,7 @@ const ViewAllImages = () => {
             <div className="bg-white  p-4 rounded-md  flex flex-col  md:w-5/12 md:gap-4 ">
               <div className=" w-full  mx-auto p-7 bg-white rounded-md ">
                   <div className="flex justify-between ">  
-                    <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">Add Image</h1>
+                    <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">Add Dashboard Details</h1>
                     <div>
                           <MdClose
                             onClick={() => setFilterPopupVisible(false)}
@@ -166,7 +166,7 @@ const ViewAllImages = () => {
                 {success && <p className="text-green-500 text-center">{success}</p>}
                 <form className="space-y-4">
                   <div>
-                    <label className="block text-gray-600 mb-1">Image Name</label>
+                    <label className="block text-gray-600 mb-1">Dashboard Name</label>
                     <input
                       type="text"
                       value={name}
@@ -176,7 +176,7 @@ const ViewAllImages = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-600 mb-1">Image URL</label>
+                    <label className="block text-gray-600 mb-1">Dashboard URL</label>
                     <input
                       type="text"
                       value={imageURL}
