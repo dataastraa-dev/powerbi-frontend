@@ -22,15 +22,18 @@ const AdminDashboard = ({ user}) => {
       case "userCreation":
         return <UserCreationCard 
                 sidebarToggle={sidebarToggle} 
-                setSidebarToggle={setSidebarToggle}/>;
+                setSidebarToggle={setSidebarToggle}
+              />;
       case "imageUpload":
         return <ImageUploadCard 
                 sidebarToggle={sidebarToggle} 
-                setSidebarToggle={setSidebarToggle}/>;
+                setSidebarToggle={setSidebarToggle}
+              />;
       case "viewImages":
         return <ViewAllImages 
                 sidebarToggle={sidebarToggle} 
-                setSidebarToggle={setSidebarToggle}/>;
+                setSidebarToggle={setSidebarToggle}
+              />;
       default:
         return <ViewUsers/>;
     }

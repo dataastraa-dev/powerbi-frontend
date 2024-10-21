@@ -27,13 +27,13 @@ const Navbar = ({user ,  setActiveTab ,sidebarToggle, setSidebarToggle}) => {
     location.reload(); // Redirect to login page
   };
 
-  const viewUsers = () => {
-    navigate("/admin/view-users");
-  };
+  // const viewUsers = () => {
+  //   navigate("/admin/view-users");
+  // };
 
-  const viewAllImages = () => {
-    navigate("/admin/view-images");
-  };
+  // const viewAllImages = () => {
+  //   navigate("/admin/view-images");
+  // };
   
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

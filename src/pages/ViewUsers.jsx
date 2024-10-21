@@ -6,8 +6,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import UserCreationCard from "../components/UserCreationCard";
 import { MdClose } from "react-icons/md";
 import Select from "react-select";
-
-
+import CloseIcon from "@mui/icons-material/Close";
 
 const ViewUsers = () => {
   const [users, setUsers] = useState([]);
@@ -145,7 +144,7 @@ const createUser = async () => {
   
 
   return (
-    <div className="  flex flex-col flex-grow bg-gray-100 overflow-x-hidden">
+    <div className=" w-full min-h-screen flex flex-col flex-grow bg-gray-100 overflow-x-hidden">
       <div className="p-6 bg-white shadow-md rounded-md ">
         <div className=" flex justify-between ">
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 ">Users</h1>    
@@ -159,19 +158,15 @@ const createUser = async () => {
         <UserList users={users} onDelete={handleDelete} />
       </div>
       {filterPopupVisible && (
-        <div className="absolute top-0 left-0 h-screen w-full flex justify-center items-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white  p-4 rounded-md shadow-lg flex flex-col  md:w-1/2 md:gap-4 h-[60vh] ">
-            <div className="w-full p-6 bg-white rounded-lg ">
-              <div className="flex justify-between ">
-                <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Create User</h2>
-                    <div>
-                      <MdClose
-                        onClick={() => setFilterPopupVisible(false)}
-                        className=" text-2xl text-gray-500 hover:text-gray-700 cursor-pointer"
-                      />
-                    </div>
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl overflow-y-auto h-[80%] m-3">
+          <div className="flex justify-between">
+            <h2 className="text-xl font-semibold mb-4">Create User</h2>
+              <div>
+                <CloseIcon className="cursor-pointer" onClick={() => setFilterPopupVisible(false)}/>
               </div>
-              <form>
+          </div>
+          <form>
                 <div className="mb-4">
                   <label className="block text-gray-700 mb-2">Name</label>
                   <input
@@ -206,7 +201,7 @@ const createUser = async () => {
                   />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Select Images</label>
+                  <label className="block text-gray-700 mb-2">Select Dashboard</label>
                   <Select
                     isMulti
                     name="images"
@@ -229,10 +224,9 @@ const createUser = async () => {
                     Create User
                   </button>
                 </div>
-              </form>
-              {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
-              {success && <p className="mt-4 text-green-500 text-center">{success}</p>}
-            </div>
+          </form>
+          {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
+          {success && <p className="mt-4 text-green-500 text-center">{success}</p>}
         </div>
       </div>
       )}

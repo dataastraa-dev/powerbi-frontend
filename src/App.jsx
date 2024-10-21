@@ -11,8 +11,11 @@ import UserCreationCard from "./components/UserCreationCard";
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [menuIsOpen, setMenuIsOpen] = useState(true)
 
-
+  const toggleSidebar = () => {
+    setMenuIsOpen(!menuIsOpen);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,11 +50,41 @@ const App = () => {
           path="/admin/*"
           element={
             <ProtectedRoute user={user} role="Admin">
-              <AdminRoutes 
-                user={user}
+              <Routes>
+                <Route 
+                  path="dashboard" 
+                  element={
+                  <AdminDashboard 
+                  user={user}
+                  toggleSidebar={toggleSidebar}
+                  menuIsOpen = {menuIsOpen}
+                  />
+                  } />
+                <Route 
+                  path="view-users" 
+                  element={
+                  <ViewUsers 
+                  toggleSidebar={toggleSidebar}
+                  menuIsOpen = {menuIsOpen}
+                  />} />
+
+                <Route 
+                  path="view-images" 
+                  element={
+                  <ViewImages 
+                  toggleSidebar={toggleSidebar}
+                  menuIsOpen = {menuIsOpen}
+                  />} />
+
+                <Route 
+                  path="create-user" 
+                  element={
+                  <UserCreationCard 
+                  toggleSidebar={toggleSidebar}
+                  menuIsOpen = {menuIsOpen}
+                  />} />
                 
-                />
-                
+              </Routes>
             </ProtectedRoute>
           }
         />
@@ -67,48 +100,6 @@ const App = () => {
       </Routes>
     </Router>
     </>
-  );
-};
-
-const AdminRoutes = ({user, setIsOpen}) => {
-
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-  return (
-    <Routes>
-      <Route 
-        path="dashboard" 
-        element={
-        <AdminDashboard 
-        user={user}
-        toggleSidebar={toggleSidebar}
-        
-        />
-        } />
-      <Route 
-        path="view-users" 
-        element={
-        <ViewUsers 
-        toggleSidebar={toggleSidebar}
-        />} />
-
-      <Route 
-        path="view-images" 
-        element={
-        <ViewImages 
-        toggleSidebar={toggleSidebar}
-        />} />
-
-      <Route 
-        path="create-user" 
-        element={
-        <UserCreationCard 
-        toggleSidebar={toggleSidebar}
-        />} />
-      
-    </Routes>
   );
 };
 
