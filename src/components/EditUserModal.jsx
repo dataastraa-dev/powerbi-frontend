@@ -28,6 +28,7 @@ const EditUserModal = ({ user, images, onClose, onUpdate }) => {
     try {
       const token = localStorage.getItem("token");
       const headers = { Authorization: token };
+      console.log(updatedUser)
       const { data } = await axios.put(
         `${BASE_URL}/user/${user._id}`,
         {
@@ -39,7 +40,7 @@ const EditUserModal = ({ user, images, onClose, onUpdate }) => {
 
       if (data.success) {
         setSuccess("User updated successfully.");
-        onUpdate(data.user);
+        onUpdate(updatedUser);
         onClose();
       } else {
         setError(data.message);

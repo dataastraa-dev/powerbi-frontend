@@ -1,31 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { BASE_URL } from "../constants.js";
 import { MdClose } from "react-icons/md";
 const ViewAllImages = () => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
+  const [name, setName] = useState("");
+  const [imageURL, setImageURL] = useState("");
+  const [success, setSuccess] = useState(null);
+  const [filterPopupVisible, setFilterPopupVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [dataID, setDataID] = useState("");
+  const [isDeleteImage, setIsDeleteImage] = useState(false);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const headers = {
-          Authorization: token,
-        };
-        const response = await axios.get(
-          `${BASE_URL}/admin/images`,
-          { headers }
-        );
-        setImages(response.data.data);
-      } catch (error) {
-        setError(error.response?.data?.message || error.message);
-      }
-    };
-
     fetchImages();
   }, []);
+
+  const fetchImages = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: token,
+      };
+      const response = await axios.get(
+        `${BASE_URL}/admin/images`,
+        { headers }
+      );
+      setImages(response.data.data);
+    } catch (error) {
+      setError(error.response?.data?.message || error.message);
+    }
+  };
 
   const deleteImage = async (id) => {
     try {
@@ -33,21 +40,17 @@ const ViewAllImages = () => {
       const headers = {
         Authorization: token,
       };
-      await axios.delete(`${BASE_URL}/admin/images/${id}`, {
+      await axios.delete(`${BASE_URL}/admin/${id}`, {
         headers,
       });
+      fetchImages();
+      closePopUp();
       setImages(images.filter((image) => image._id !== id));
     } catch (error) {
       setError(error.response?.data?.message || error.message);
       setTimeout(() => setError(null), 3000);
     }
   };
-
-  // Image upload 
-  const [name, setName] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [success, setSuccess] = useState(null);
-  const [filterPopupVisible, setFilterPopupVisible] = useState(false);
 
   useEffect(() => {
     if (filterPopupVisible) {
@@ -61,30 +64,80 @@ const ViewAllImages = () => {
     };
   }, [filterPopupVisible]);
 
-  const addImage = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setError("No token found. Please log in.");
-        return;
-      }
+  const onSubmit = async () => {
+    if (isEditing) {
+      try {
+          const token = localStorage.getItem("token");
+          const headers = {
+            Authorization: token,
+          };
+          const { data } = await axios.put(
+            `${BASE_URL}/admin/${dataID}`, 
+            { name, imageURL },
+            {headers}
+          );
 
-      const headers = { Authorization: token };
-      const { data } = await axios.post(
-        `${BASE_URL}/admin/images`,
-        { name, imageURL },
-        { headers }
-      );
-      setSuccess(data.message);
-      setName("");
-      setImageURL("");
-      setTimeout(() => setSuccess(null), 3000);
-    } catch (error) {
-      setError(error.response?.data?.message || error.message);
-      setTimeout(() => setError(null), 3000);
+          setSuccess(data.message);
+          setTimeout(() => setSuccess(null), 3000);
+          fetchImages();
+          closePopUp();
+
+        } catch (error) {
+          setError(error.response?.data?.message || error.message);
+          setTimeout(() => setError(null), 3000);
+        }
+    } 
+    else {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setError("No token found. Please log in.");
+          return;
+        }
+
+        const headers = { Authorization: token };
+        const { data } = await axios.post(
+          `${BASE_URL}/admin/images`,
+          { name, imageURL },
+          { headers }
+        );
+
+        setSuccess(data.message);
+        setTimeout(() => setSuccess(null), 3000);
+        fetchImages();
+        closePopUp();
+
+      } catch (error) {
+        setError(error.response?.data?.message || error.message);
+        setTimeout(() => setError(null), 3000);
+      }
     }
   };
-  // Image upload end
+  
+  const handleEdit = async (imageDetails) => {
+    setFilterPopupVisible(true);
+    setIsEditing(true);
+    setName(imageDetails.name);
+    setImageURL(imageDetails.imageURL);
+    setDataID(imageDetails._id);
+  }
+
+  const handleDelete = async (imageDetails) => {
+    setIsDeleteImage(true);
+    setFilterPopupVisible(true);
+    setName(imageDetails.name);
+    setImageURL(imageDetails.imageURL);
+    setDataID(imageDetails._id);
+  }
+
+  const closePopUp = () => {
+    setFilterPopupVisible(false);
+    setIsEditing(false);
+    setIsDeleteImage(false);
+    setName("");
+    setImageURL("");
+    setDataID("");
+  }
 
   return (
     <div className="flex-grow flex flex-col w-full min-h-screen">
@@ -98,7 +151,7 @@ const ViewAllImages = () => {
           <div>
             <button className="bg-blue-500 text-white py-2.5 mb-2 mt-2 rounded-md hover:bg-blue-600 w-full xs:w-28 sm:w-32 "
                   onClick={()=> setFilterPopupVisible(true)}
-                  >Add New Dashboard
+                  >Add Report
             </button>
           </div>
         </div>
@@ -136,10 +189,16 @@ const ViewAllImages = () => {
                   <td className="py-4 px-6 text-gray-700">
                     {new Date(image.createdAt).toLocaleString()}
                   </td>
-                  <td className="py-4 px-6 text-right">
+                  <td className="py-4 px-6 space-x-2 text-right">
                     <button
-                      onClick={() => deleteImage(image._id)}
-                      className="text-red-500 hover:text-red-700 bg-red-200 p-2 rounded-full transition duration-200"
+                      onClick={()=> handleEdit(image)}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(image)}
+                      className="text-red-500 hover:text-red-700"
                     >
                       <FaTrash />
                     </button>
@@ -154,10 +213,12 @@ const ViewAllImages = () => {
             <div className="bg-white  p-4 rounded-md  flex flex-col  md:w-5/12 md:gap-4 ">
               <div className=" w-full  mx-auto p-7 bg-white rounded-md ">
                   <div className="flex justify-between ">  
-                    <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">Add Dashboard Details</h1>
+                    <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">{isEditing? "Edit Report Details" : isDeleteImage ? "Do You want to Delete this data?" :"Add Report Details"} </h1>
                     <div>
                           <MdClose
-                            onClick={() => setFilterPopupVisible(false)}
+                            onClick={() => {
+                              closePopUp();
+                            }}
                             className=" text-2xl text-gray-500 hover:text-gray-700 cursor-pointer"
                           />
                     </div>
@@ -187,10 +248,10 @@ const ViewAllImages = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={addImage}
-                    className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
+                    onClick={() => {isDeleteImage ? deleteImage(dataID) : onSubmit()}}
+                    className={`w-full px-4 py-2 ${isDeleteImage ? "bg-red-500 hover:bg-red-700" :"bg-blue-500 hover:bg-blue-600"} text-white rounded-md transition-colors duration-200`}
                   >
-                    Submit
+                    {isDeleteImage ? "Delete" :"Submit"}
                   </button>
                 </form>
               </div>
