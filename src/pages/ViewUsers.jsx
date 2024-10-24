@@ -177,7 +177,7 @@ const ViewUsers = () => {
       </div>
       {filterPopupVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl overflow-y-auto h-[80%] m-3">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl  h-[50%] m-3">
           <div className="flex justify-between">
             <h2 className="text-xl font-semibold mb-4">{!isDelete ? "Create User" : "Do You Want to delete this user?"}</h2>
               <div>
@@ -239,7 +239,7 @@ const ViewUsers = () => {
                   <button
                     type="button"
                     onClick={() => {!isDelete ? createUser() : onDelete()}}
-                    className={`w-full px-4 py-2 ${isDelete ? "bg-red-500 hover:bg-red-700" :"bg-blue-500 hover:bg-blue-600"} text-white rounded-lg bg-gray-10 transition-colors duration-200`}
+                    className={`w-full xs:mt-0 lg:mt-1 px-4 py-2 ${isDelete ? "bg-red-500 hover:bg-red-700" :"bg-blue-500 hover:bg-blue-600"} text-white rounded-lg bg-gray-10 transition-colors duration-200`}
                   >
                     {!isDelete ? "Create User" : "Delete User"}
                   </button>

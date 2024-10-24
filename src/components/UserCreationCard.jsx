@@ -173,14 +173,14 @@ const UserCreationCard = () => {
                   />
                 </div>
                 <div className="flex justify-between ">
-                  <Link to="/">
+                  {/* <Link to="/">
                     <button
                       type="button"
                       className=" px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 "
                     >
                       Go To Home Page
                     </button>
-                  </Link>
+                  </Link> */}
                   <button
                     type="button"
                     onClick={createUser}

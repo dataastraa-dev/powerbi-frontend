@@ -9,14 +9,17 @@ const Login = ({ setUser }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLoginObj({ ...loginObj, [name]: value });
   };
 
   const onLogin = async () => {
+    
     console.log("Login", loginObj);
-
+    setLoading(true);
     try {
       const { data } = await axios.post(`${BASE_URL}/user/login`, loginObj);
       console.log(data.data);
@@ -37,6 +40,8 @@ const Login = ({ setUser }) => {
     } catch (error) {
       console.error("Login failed:", error.response.data.message);
       setError(error.response.data.message);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -73,10 +78,38 @@ const Login = ({ setUser }) => {
           </div>
           <button
             type="button"
-            className="w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 transition-colors"
+            className="flex justify-center w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 transition-colors"
             onClick={onLogin}
+            
           >
-            Sign In
+            {loading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-5 w-5 mr-3 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      ></path>
+                    </svg>
+                   
+                  </>
+                ) : (
+                  "Sign In"
+                )}
+            
           </button>
         </form>
         {error && <p className="text-red-500 mt-4">{error}</p>}
