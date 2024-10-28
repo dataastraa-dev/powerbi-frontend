@@ -5,6 +5,8 @@ import UserList from "../components/UsersComponents/UserList";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import CloseIcon from "@mui/icons-material/Close";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ViewUsers = () => {
   const [users, setUsers] = useState([]);
@@ -48,8 +50,32 @@ const ViewUsers = () => {
       await axios.delete(`${BASE_URL}/user/${userObj._id}`, { headers });
       fetchUsers();
       closePopUp();
+      setTimeout(() => {
+        setError(null);
+        setSuccess(null);
+        toast.success('User deleted successfully.', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      }, 1000);
     } catch (error) {
-      console.error("Error deleting user:", error.message);
+      console.error("Error deleting user:", error.message);     
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -113,36 +139,52 @@ const ViewUsers = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        setError("No token found. Please log in.");
+        setError("No token found. Please log in.");       
         return;
-      }
-
+      }     
       const headers = { Authorization: token };
       const { data } = await axios.post(`${BASE_URL}/user/create`, userObj, {
         headers,
       });
-
       if (data.success) {
-        setSuccess("User created successfully.");
+        setTimeout(() => {
+          toast.success(data.message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }, 1000);
+        // setSuccess("User created successfully.");
         setUserObj({
           email: "",
           password: "",
           name: "",
           images: [],
-        });
-        navigate("/");
-        
+        });        
+        navigate("/");  
       } else {
-        setError(data.message);
-        
+        setError(data.message);             
       }
     } catch (error) {
       setError(error.response?.data?.message || error.message);
+      setTimeout(() => {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      }, 1000);
     }
-    setTimeout(() => {
-      setError(null);
-      setSuccess(null);
-    }, 3000);
   };
   // user creation card end
     
@@ -242,7 +284,7 @@ const ViewUsers = () => {
                     className={`w-full xs:mt-0 lg:mt-1 px-4 py-2 ${isDelete ? "bg-red-500 hover:bg-red-700" :"bg-blue-500 hover:bg-blue-600"} text-white rounded-lg bg-gray-10 transition-colors duration-200`}
                   >
                     {!isDelete ? "Create User" : "Delete User"}
-                  </button>
+                  </button>                   
                 </div>
           </form>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
@@ -250,6 +292,7 @@ const ViewUsers = () => {
         </div>
       </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

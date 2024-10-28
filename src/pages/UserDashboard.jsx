@@ -3,15 +3,48 @@ import axios from "axios";
 import { BASE_URL } from "../constants.js";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from "@mui/icons-material/Close";
 
 // Navbar Start
 const Navbar = ({ logout, name, setSidebarToggle,sidebarToggle }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
   const dropdownRef = useRef(null);
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const handleChangePassword = () => {
+    setIsPopupVisible(true);
+  };
+  const handleSubmitPasswordChange = async () => {
+    if (newPassword === confirmPassword && newPassword !== "") {
+      try {
+        const userId = localStorage.getItem("userId");
+        const response = await fetch(`${BASE_URL}/users/change-password`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newPassword, userId }),
+        });
+        if (response.ok) {
+          alert("Password changed successfully");
+          setIsPopupVisible(false);
+        } else {
+          alert("Failed to change password");
+        }
+      } catch (error) {
+        alert("An error occurred. Please try again.");
+      }
+    } else if (newPassword !== confirmPassword) {
+      alert("Password not Matched.");
+    } else {
+      alert("InValid Credential");
+    }
+  };
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setDropdownVisible(false);
@@ -68,6 +101,16 @@ const Navbar = ({ logout, name, setSidebarToggle,sidebarToggle }) => {
                 >
                   <ul className="py-1">
                     <li>
+                      {/* {isAuthenticated !== 2 && ( */}
+                      <button
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
+                        onClick={handleChangePassword}
+                      >
+                        Change Password
+                      </button>
+                      {/* )} */}
+                    </li>
+                    <li>                     
                       <button
                         onClick={logout}
                         className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
@@ -81,6 +124,47 @@ const Navbar = ({ logout, name, setSidebarToggle,sidebarToggle }) => {
           </div>
         {/* Logout end*/}
       </div>
+      {isPopupVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded shadow-lg w-96">
+            <div className="flex justify-between">
+              <h2 className="text-xl font-bold mb-4">Change Password</h2>
+              <CloseIcon
+                className="cursor-pointer hover:text-red-500 "
+                onClick={() => setIsPopupVisible(false)}
+              />
+            </div>
+            <input
+              type="password"
+              placeholder="Enter New Password"
+              className="border p-2 w-full mb-4"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="border p-2 w-full mb-4"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <div className="flex justify-end space-x-4">
+              <button
+                className="bg-gray-300 px-4 py-2 rounded"
+                onClick={() => setIsPopupVisible(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={handleSubmitPasswordChange}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

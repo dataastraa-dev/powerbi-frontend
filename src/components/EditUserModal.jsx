@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Select from "react-select";
 import axios from "axios";
 import { BASE_URL } from "../constants.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditUserModal = ({ user, images, onClose, onUpdate }) => {
   const [updatedUser, setUpdatedUser] = useState({
@@ -42,16 +44,26 @@ const EditUserModal = ({ user, images, onClose, onUpdate }) => {
         setSuccess("User updated successfully.");
         onUpdate(updatedUser);
         onClose();
+        setTimeout(() => {
+          toast.success(data.message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }, 1000);
       } else {
         setError(data.message);
       }
     } catch (error) {
       setError(error.response?.data?.message || error.message);
     }
-    setTimeout(() => {
-      setError(null);
-      setSuccess(null);
-    }, 3000);
+    
+    
   };
 
   return (
@@ -104,6 +116,7 @@ const EditUserModal = ({ user, images, onClose, onUpdate }) => {
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              
             >
               Save
             </button>
@@ -111,6 +124,7 @@ const EditUserModal = ({ user, images, onClose, onUpdate }) => {
         </form>
         {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         {success && <p className="mt-4 text-green-500 text-center">{success}</p>}
+        
       </div>
     </div>
   );

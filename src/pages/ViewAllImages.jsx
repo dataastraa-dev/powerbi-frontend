@@ -3,6 +3,10 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { BASE_URL } from "../constants.js";
 import { MdClose } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const ViewAllImages = () => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
@@ -63,7 +67,7 @@ const ViewAllImages = () => {
       document.body.style.overflow = "auto";
     };
   }, [filterPopupVisible]);
-
+// 
   const onSubmit = async () => {
     if (isEditing) {
       try {
@@ -78,7 +82,19 @@ const ViewAllImages = () => {
           );
 
           setSuccess(data.message);
-          setTimeout(() => setSuccess(null), 3000);
+          setTimeout(() =>{ 
+            setSuccess(null)
+            toast.success('User Updated successfully.', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
+          }, 0);
           fetchImages();
           closePopUp();
 
@@ -113,7 +129,7 @@ const ViewAllImages = () => {
       }
     }
   };
-  
+// 
   const handleEdit = async (imageDetails) => {
     setFilterPopupVisible(true);
     setIsEditing(true);
@@ -259,6 +275,7 @@ const ViewAllImages = () => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

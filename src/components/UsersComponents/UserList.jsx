@@ -3,6 +3,9 @@ import axios from "axios";
 import { BASE_URL } from "../../constants.js";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import EditUserModal from "../EditUserModal";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { MdLockReset } from "react-icons/md";
 
 const UserList = ({ users, handleDeleteClick, fetchUsers }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -85,6 +88,13 @@ const UserList = ({ users, handleDeleteClick, fetchUsers }) => {
                 >
                   <FaTrash />
                 </button>
+                <button
+                  // onClick={() => handleDeleteClick(user)}
+                  className=" text-xl text-red-500 hover:text-red-700"
+                >
+                  <MdLockReset />
+                </button>
+                
               </td>
             </tr>
           ))}
@@ -98,6 +108,7 @@ const UserList = ({ users, handleDeleteClick, fetchUsers }) => {
           onUpdate={handleUpdate}
         />
       )}
+      
     </div>
   );
 }

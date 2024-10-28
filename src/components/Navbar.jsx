@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from "@mui/icons-material/Close";
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = ({user ,  setActiveTab ,sidebarToggle, setSidebarToggle}) => {
 
@@ -24,10 +26,24 @@ const Navbar = ({user ,  setActiveTab ,sidebarToggle, setSidebarToggle}) => {
   };
 
   const logout = () => {    
+    // setTimeout(() => {
       console.log("clicked logout");
-        localStorage.removeItem("token"); // Clear token from local storage
-        navigate("/", { replace: true });
-        location.reload(); // Redirect to login page
+      localStorage.removeItem("token"); // Clear token from local storage
+      navigate("/", { replace: true });
+      location.reload(); // Redirect to login page
+      
+    // }, 3000)
+    // toast.success('Logging out...', {
+    //   position: "top-right",
+    //   autoClose: 2500,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "light",
+    //   });
+      
   };
 
   // const viewUsers = () => {
@@ -172,6 +188,7 @@ const Navbar = ({user ,  setActiveTab ,sidebarToggle, setSidebarToggle}) => {
                       </button>                     
                     </li>
                   </ul>
+                  {/* <ToastContainer /> */}
                 </div>
               )}
           </div>
