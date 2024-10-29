@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from "@mui/icons-material/Close";
+import {BASE_URL} from "../constants";
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
