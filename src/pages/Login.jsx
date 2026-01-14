@@ -45,8 +45,9 @@ const Login = ({ setUser }) => {
     <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
       <div className="w-full md:w-1/2 p-8">
         <div className="mb-8 text-center">
+          <img src="assets/images/newlogo.png" alt="Logo" className="mx-auto w-32 h-auto object-contain"/>
           <h2 className="text-3xl font-bold mb-6 text-gray-800">
-            Welcome Back!
+            Dashboard Portal
           </h2>
           <p className="mb-4 text-gray-600">Please sign in to your account</p>
         </div>
@@ -81,9 +82,11 @@ const Login = ({ setUser }) => {
         </form>
         {error && <p className="text-red-500 mt-4">{error}</p>}
       </div>
-      <div className="hidden md:block w-full md:w-1/2 bg-gray-600 text-white p-8">
+      <div className="hidden md:block w-full md:w-1/2 bg-gray-600 text-white">
         <div className="flex flex-col items-center justify-center h-full">
-          <h2 className="text-3xl font-bold mb-4">DataAstraa LLP</h2>
+          <img src="assets/images/conference.jpg" alt="Logo" className="mx-auto w-96 h-auto" />
+          {/* <img src="assets/images/newlogo.png" alt="Logo" className="mx-auto mb-6 w-32 md:w-40 lg:w-48 object-contain" /> */}
+          {/* <h2 className="text-3xl font-bold mb-4">DataAstraa LLP</h2> */}
           {/* <p className="mb-6">
             Add your organization's description here.
           </p> */}
