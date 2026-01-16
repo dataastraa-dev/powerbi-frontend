@@ -45,15 +45,7 @@ const Navbar = ({ logout, name, setSidebarToggle,sidebarToggle }) => {
             name.slice(1)}` : "Loading..."}
           </div>
         </Link>
-        {/* Logout */}
-        {/* <div className="flex">
-          <button
-            onClick={logout}
-            className="text-red-500 text-lg hover:text-red-600"
-          >
-            Logout
-          </button>
-        </div> */}
+        {/* Logout Start*/}
         <div className="relative">
               <div
                 className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer"
@@ -87,10 +79,10 @@ const Navbar = ({ logout, name, setSidebarToggle,sidebarToggle }) => {
 //  Navbar End
 
 // Sidebar Start
-const Sidebar = ({ images, setCurrentDashboard,currentDashboard,sidebarToggle, setSidebarToggle }) => {
+const Sidebar = ({ images, setCurrentDashboard, currentDashboard, sidebarToggle, setSidebarToggle }) => {
 
   const dropdownRef = useRef(null);
-  
+
   return (
     <div className={`p-5 insert-y-0 left-0
                     transform ${sidebarToggle ? "-translate-x-full " : ""} 
@@ -98,18 +90,6 @@ const Sidebar = ({ images, setCurrentDashboard,currentDashboard,sidebarToggle, s
                     bg-zinc-900 text-white p-5 w-60 
                     `}
                     ref={dropdownRef}>
-      {/* <h2 className="text-xl font-bold mb-4 text-blue-700">Available Dashboards</h2> */}
-      {/* <ul className="w-full text-left px-4 py-2 bg-gray-900 text-sm font-semibold rounded-lg">
-        {images.map((image, index) => (
-          <li
-            key={index}
-            className="cursor-pointer text-white hover:text-gray-400 mb-2"
-            onClick={() => setCurrentDashboard(index)}
-          >
-            {image.name}
-          </li>
-        ))}
-      </ul> */}
       <div className="w-full flex items-center mb-6">
         <p className="text-2xl font-bold text-white ">DataAstraa</p>
       </div>  
@@ -117,16 +97,18 @@ const Sidebar = ({ images, setCurrentDashboard,currentDashboard,sidebarToggle, s
         {images.map((image, index) => (
 
           <button
-          onClick={() =>{setCurrentDashboard(index)            
-              }}
-              className={`w-full text-left px-4 py-3  text-sm font-semibold rounded-lg
-                ${currentDashboard === (index)
-                ? "bg-gray-700"
-                : "bg-gray-900 hover:bg-gray-700"
-                }`}
-            >
-              {image.name}
-            </button>
+            key={index}
+            onClick={() => setCurrentDashboard(index)}
+            className={`w-full text-left px-4 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${
+            currentDashboard === index
+              ? "bg-gray-700 "
+              : "bg-gray-900 hover:bg-gray-700 "
+            
+              
+          } focus:outline-none`}
+          >
+            {image.name}
+          </button>
         ))}
       </div>
     </div>
@@ -179,8 +161,11 @@ const UserDashboard = ({ user }) => {
 
   return (
     <div className="flex bg-gray-100 ">
-      <Sidebar images={images} setCurrentDashboard={setCurrentDashboard} 
-                sidebarToggle={sidebarToggle}/>
+      <Sidebar 
+      images={images} 
+      setCurrentDashboard={setCurrentDashboard} 
+      currentDashboard={currentDashboard}
+      sidebarToggle={sidebarToggle}/>
           
           <div className={`flex flex-grow  
                           justify-start overflow-x-auto
@@ -197,10 +182,10 @@ const UserDashboard = ({ user }) => {
                   <div className="font-bold text-xl mb-2 text-gray-900">
                     {images[currentDashboard].name}
                   </div>
-                  <p className="text-gray-700"> 
+                  {/* <p className="text-gray-700"> 
                     Created at:{" "}
                     {new Date(images[currentDashboard].createdAt).toLocaleString()}
-                  </p>
+                  </p> */}
                 </div>
                 {images.length === 0 ? (
                   <p className="text-gray-700 text-center">

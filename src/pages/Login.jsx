@@ -99,57 +99,6 @@ const Login = ({ setUser }) => {
     </div>
   </div>
   
-
-    // <div className="w-screen h-screen flex flex-col md:flex-row">
-    //   <div className="w-full md:w-1/2 h-1/2 md:h-full p-3">
-    //     <img
-    //       src="https://i.pinimg.com/236x/3b/59/f9/3b59f9d183b398919d23d6b0c6f7bfc7.jpg"
-    //       className="object-cover w-full h-full rounded-3xl"
-    //       alt="SignIn"
-    //     />
-    //   </div>
-
-    //   <div className="w-full md:w-1/2 flex items-center justify-center p-6 bg-gray-50">
-    //     <div className="w-full max-w-sm bg-white p-8 rounded-lg shadow-lg">
-    //       <h1 className="text-3xl font-bold mb-6 text-gray-800">
-    //         Welcome Back!
-    //       </h1>
-    //       <p className="mb-4 text-gray-600">Please sign in to your account</p>
-    //       <form>
-    //         <div className="mb-4">
-    //           <input
-    //             type="text"
-    //             placeholder="Email"
-    //             value={loginObj.email}
-    //             onChange={handleInputChange}
-    //             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-    //             name="email"
-    //           />
-    //         </div>
-    //         <div className="mb-6">
-    //           <input
-    //             type="password"
-    //             placeholder="Password"
-    //             value={loginObj.password}
-    //             onChange={handleInputChange}
-    //             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-    //             name="password"
-    //           />
-    //         </div>
-    //         <div>
-    //           <button
-    //             type="button"
-    //             className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-    //             onClick={onLogin}
-    //           >
-    //             Sign In
-    //           </button>
-    //         </div>
-    //       </form>
-    //       {error && <p className="text-red-500 mt-4">{error}</p>}
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 
